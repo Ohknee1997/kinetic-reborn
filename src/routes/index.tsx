@@ -85,61 +85,63 @@ function CodesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1800px] px-5 pb-24 sm:px-8">
-        <div className="grid gap-5 lg:grid-cols-2">
+      <section className="mx-auto max-w-[1800px] px-4 pb-24 sm:px-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
             <article
               key={c.id}
-              className="relative overflow-hidden border-2 border-paper-foreground bg-paper"
+              className="relative flex flex-col overflow-hidden border-2 border-paper-foreground bg-paper"
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-2 bottom-0 select-none font-display text-[5.5rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[7rem]"
+                className="pointer-events-none absolute -right-1 bottom-0 select-none font-display text-[4rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[5rem]"
               >
                 {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
-              <div className="relative flex min-w-0 items-start gap-3 p-4">
-                <div className="grid size-11 shrink-0 place-items-center bg-paper-foreground font-display text-base text-paper">
+              <div className="relative flex min-w-0 items-start gap-2 p-3">
+                <div className="grid size-9 shrink-0 place-items-center bg-paper-foreground font-display text-sm text-paper">
                   {c.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-display text-lg tracking-tight">{c.name}</h2>
-                  <div className="mt-1 flex flex-wrap gap-1.5">
-                    {c.tags.map((t) => (
+                  <h2 className="truncate font-display text-base tracking-tight">{c.name}</h2>
+                  <div className="mt-0.5 flex flex-wrap gap-1">
+                    {c.tags.slice(0, 2).map((t) => (
                       <span
                         key={t}
-                        className="label-xs border border-paper-foreground/30 px-1.5 py-0.5 font-bold text-paper-foreground/70"
+                        className="label-xs border border-paper-foreground/30 px-1 py-0.5 font-bold text-paper-foreground/70"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <p className="mt-2 text-sm text-paper-foreground/70">{c.blurb}</p>
+                  <p className="mt-1 line-clamp-2 text-xs leading-snug text-paper-foreground/70">
+                    {c.blurb}
+                  </p>
                 </div>
                 <span className="label-xs shrink-0 font-bold text-primary">FREE</span>
               </div>
 
-              <div className="relative mx-4 mb-4 flex items-center justify-between gap-3 border-2 border-dashed border-primary/70 px-3 py-2">
+              <div className="relative mx-3 mb-2 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2.5 py-1.5">
                 <div className="min-w-0">
                   <p className="label-xs text-paper-foreground/50">BONUS CODE</p>
-                  <p className="truncate font-mono text-base font-bold">{c.code}</p>
+                  <p className="truncate font-mono text-sm font-bold">{c.code}</p>
                 </div>
                 <button
                   onClick={() => copy(c.code)}
-                  className="label-xs flex shrink-0 items-center gap-1.5 bg-paper-foreground px-3 py-2 font-bold text-paper"
+                  className="label-xs flex shrink-0 items-center gap-1 border-2 border-paper-foreground px-2 py-1 font-bold text-paper-foreground"
                 >
-                  {copied === c.code ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+                  {copied === c.code ? <Check className="size-3" /> : <Copy className="size-3" />}
                   {copied === c.code ? "COPIED" : "COPY"}
                 </button>
               </div>
 
               <a
                 href={c.link}
-                className="label-xs relative flex items-center justify-between bg-paper-foreground px-4 py-2.5 font-bold text-paper"
+                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-3 py-2 font-bold text-paper-foreground"
               >
-                <span>{c.reward}</span>
-                <span>CLAIM →</span>
+                <span className="truncate">{c.reward}</span>
+                <span className="shrink-0">CLAIM →</span>
               </a>
             </article>
           ))}
