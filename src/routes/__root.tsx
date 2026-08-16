@@ -77,23 +77,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "OHKNEE — Codes, Apps & Cash-Out Guides" },
+      { name: "description", content: "Sweeps casino codes, play-to-earn apps and a no-BS crypto cash-out guide." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -114,13 +117,45 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function SiteNav() {
+  const items = [
+    { to: "/", label: "Casino Codes" },
+    { to: "/apps", label: "Earn Apps" },
+    { to: "/guide", label: "Cash-Out Guide" },
+  ] as const;
+  return (
+    <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
+      <div className="mx-auto flex max-w-[1800px] items-center gap-6 px-5 py-3">
+        <Link to="/" className="font-display text-sm tracking-tight text-foreground">
+          OHKNEE<span className="text-primary">.</span>
+        </Link>
+        <div className="flex min-w-0 flex-wrap gap-4">
+          {items.map((i) => (
+            <Link
+              key={i.to}
+              to={i.to}
+              className="label-xs text-muted-foreground transition-colors hover:text-foreground"
+              activeProps={{ className: "label-xs text-primary" }}
+              activeOptions={{ exact: i.to === "/" }}
+            >
+              {i.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteNav />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
 }
+
