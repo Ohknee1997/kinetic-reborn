@@ -22,11 +22,9 @@ export const Route = createFileRoute("/")({
   component: CodesPage,
 });
 
-const FILTERS = ["ALL", "SWEEPS", "DAILY BONUS", "FAST PAYOUT", "SPORTS", "NEW"];
-
 function CodesPage() {
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("ALL");
+  const [tagFilter, setTagFilter] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
 
   const list = useMemo(
@@ -35,10 +33,12 @@ function CodesPage() {
         const matchQ =
           !query.trim() ||
           (c.name + c.blurb + c.code).toLowerCase().includes(query.trim().toLowerCase());
-        const matchF = filter === "ALL" || c.tags.includes(filter);
-        return matchQ && matchF;
+        const matchT =
+          !tagFilter.trim() ||
+          c.tags.some((t) => t.toLowerCase().includes(tagFilter.trim().toLowerCase()));
+        return matchQ && matchT;
       }),
-    [query, filter],
+    [query, tagFilter],
   );
 
   const copy = (code: string) => {
@@ -49,46 +49,39 @@ function CodesPage() {
 
   return (
     <main className="min-h-screen bg-paper text-paper-foreground">
-      <section className="mx-auto max-w-[1800px] px-5 pt-12 pb-8 sm:px-8">
+      <section className="mx-auto max-w-[1800px] px-4 pt-8 pb-4 sm:px-6">
         <p className="label-xs text-paper-foreground/50">CODES · SWEEPS · DAILY DRIPS</p>
-        <h1 className="mt-4 font-display text-[13vw] leading-[0.82] tracking-[-0.04em] sm:text-[9vw] lg:text-[7.5vw]">
+        <h1 className="mt-2 font-display text-[11vw] leading-[0.82] tracking-[-0.04em] sm:text-[8vw] lg:text-[6.5vw]">
           CODES
           <br />
           WORTH
           <br />
           COPYING<span className="text-primary">.</span>
         </h1>
-        <p className="mt-6 max-w-xl text-sm leading-relaxed text-paper-foreground/70">
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-paper-foreground/70">
           No mainstream sportsbooks. No $50 buy-in traps. Only free-to-play, daily-reward,
           no-deposit sweeps sites — worked, with real top-code copy. Free money you don't deposit
           to find.
         </p>
 
-        <div className="mt-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap">
+        <div className="mt-5 flex flex-wrap items-center gap-3">
           <label className="flex min-w-0 items-center gap-2 border-2 border-paper-foreground bg-paper px-3 py-2">
             <Search className="size-4 shrink-0" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search a site or code"
-              className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40 sm:w-64"
+              className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40 sm:w-56"
             />
           </label>
-          <div className="col-span-2 flex flex-wrap gap-2">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`label-xs border-2 px-3 py-2 font-bold transition-colors ${
-                  filter === f
-                    ? "border-paper-foreground bg-paper-foreground text-paper"
-                    : "border-paper-border text-paper-foreground/70 hover:border-paper-foreground"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+          <label className="flex min-w-0 items-center gap-2 border-2 border-paper-border bg-paper px-3 py-2">
+            <input
+              value={tagFilter}
+              onChange={(e) => setTagFilter(e.target.value)}
+              placeholder="Type a tag"
+              className="w-28 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40"
+            />
+          </label>
         </div>
       </section>
 
