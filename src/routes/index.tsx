@@ -76,7 +76,7 @@ function CodesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1800px] px-4 pb-8 sm:px-6">
+      <section className="mx-auto max-w-[1800px] px-4 pb-6 sm:px-6">
         <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
             <article
@@ -85,13 +85,13 @@ function CodesPage() {
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-1 bottom-4 select-none font-display text-[3rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[3.5rem]"
+                className="pointer-events-none absolute -right-1 bottom-8 select-none font-display text-[2.6rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[3rem]"
               >
                 {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
-              <div className="relative flex min-w-0 items-start gap-2 p-2">
-                <div className="grid size-7 shrink-0 place-items-center bg-paper-foreground font-display text-[10px] text-paper">
+              <div className="relative flex min-w-0 items-center gap-2 p-2">
+                <div className="grid size-6 shrink-0 place-items-center bg-paper-foreground font-display text-[9px] text-paper">
                   {c.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -106,16 +106,12 @@ function CodesPage() {
                       </span>
                     ))}
                   </div>
-                  <p className="line-clamp-1 text-[11px] leading-snug text-paper-foreground/70">
-                    {c.blurb}
-                  </p>
                 </div>
                 <span className="label-xs shrink-0 font-bold text-primary">FREE</span>
               </div>
 
               <div className="relative mx-2 mb-1 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2 py-1">
                 <div className="min-w-0">
-                  <p className="label-xs text-paper-foreground/50">CODE</p>
                   <p className="truncate font-mono text-xs font-bold">{c.code}</p>
                 </div>
                 <button
