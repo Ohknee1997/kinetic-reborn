@@ -85,8 +85,8 @@ function CodesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1800px] px-4 pb-24 sm:px-6">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mx-auto max-w-[1800px] px-4 pb-12 sm:px-6">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
             <article
               key={c.id}
@@ -94,42 +94,42 @@ function CodesPage() {
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-1 bottom-0 select-none font-display text-[4rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[5rem]"
+                className="pointer-events-none absolute -right-1 bottom-5 select-none font-display text-[3.5rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[4.5rem]"
               >
                 {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
-              <div className="relative flex min-w-0 items-start gap-2 p-3">
-                <div className="grid size-9 shrink-0 place-items-center bg-paper-foreground font-display text-sm text-paper">
+              <div className="relative flex min-w-0 items-start gap-2 p-2.5">
+                <div className="grid size-8 shrink-0 place-items-center bg-paper-foreground font-display text-xs text-paper">
                   {c.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-display text-base tracking-tight">{c.name}</h2>
-                  <div className="mt-0.5 flex flex-wrap gap-1">
+                  <h2 className="truncate font-display text-sm tracking-tight">{c.name}</h2>
+                  <div className="flex flex-wrap gap-1">
                     {c.tags.slice(0, 2).map((t) => (
                       <span
                         key={t}
-                        className="label-xs border border-paper-foreground/30 px-1 py-0.5 font-bold text-paper-foreground/70"
+                        className="label-xs border border-paper-foreground/30 px-1 py-0 font-bold text-paper-foreground/70"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <p className="mt-1 line-clamp-2 text-xs leading-snug text-paper-foreground/70">
+                  <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-paper-foreground/70">
                     {c.blurb}
                   </p>
                 </div>
                 <span className="label-xs shrink-0 font-bold text-primary">FREE</span>
               </div>
 
-              <div className="relative mx-3 mb-2 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2.5 py-1.5">
+              <div className="relative mx-2.5 mb-1.5 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2 py-1">
                 <div className="min-w-0">
                   <p className="label-xs text-paper-foreground/50">BONUS CODE</p>
-                  <p className="truncate font-mono text-sm font-bold">{c.code}</p>
+                  <p className="truncate font-mono text-xs font-bold">{c.code}</p>
                 </div>
                 <button
                   onClick={() => copy(c.code)}
-                  className="label-xs flex shrink-0 items-center gap-1 border-2 border-paper-foreground px-2 py-1 font-bold text-paper-foreground"
+                  className="label-xs flex shrink-0 items-center gap-1 border-2 border-paper-foreground px-1.5 py-0.5 font-bold text-paper-foreground"
                 >
                   {copied === c.code ? <Check className="size-3" /> : <Copy className="size-3" />}
                   {copied === c.code ? "COPIED" : "COPY"}
@@ -138,7 +138,7 @@ function CodesPage() {
 
               <a
                 href={c.link}
-                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-3 py-2 font-bold text-paper-foreground"
+                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-2.5 py-1.5 font-bold text-paper-foreground"
               >
                 <span className="truncate">{c.reward}</span>
                 <span className="shrink-0">CLAIM →</span>
