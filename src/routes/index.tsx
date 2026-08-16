@@ -84,8 +84,8 @@ function CodesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1800px] px-4 pb-12 sm:px-6">
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mx-auto max-w-[1800px] px-4 pb-8 sm:px-6">
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
             <article
               key={c.id}
@@ -93,13 +93,13 @@ function CodesPage() {
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-1 bottom-5 select-none font-display text-[3.5rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[4.5rem]"
+                className="pointer-events-none absolute -right-1 bottom-4 select-none font-display text-[3rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[3.5rem]"
               >
                 {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
-              <div className="relative flex min-w-0 items-start gap-2 p-2.5">
-                <div className="grid size-8 shrink-0 place-items-center bg-paper-foreground font-display text-xs text-paper">
+              <div className="relative flex min-w-0 items-start gap-2 p-2">
+                <div className="grid size-7 shrink-0 place-items-center bg-paper-foreground font-display text-[10px] text-paper">
                   {c.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -114,16 +114,16 @@ function CodesPage() {
                       </span>
                     ))}
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-paper-foreground/70">
+                  <p className="line-clamp-1 text-[11px] leading-snug text-paper-foreground/70">
                     {c.blurb}
                   </p>
                 </div>
                 <span className="label-xs shrink-0 font-bold text-primary">FREE</span>
               </div>
 
-              <div className="relative mx-2.5 mb-1.5 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2 py-1">
+              <div className="relative mx-2 mb-1 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2 py-1">
                 <div className="min-w-0">
-                  <p className="label-xs text-paper-foreground/50">BONUS CODE</p>
+                  <p className="label-xs text-paper-foreground/50">CODE</p>
                   <p className="truncate font-mono text-xs font-bold">{c.code}</p>
                 </div>
                 <button
@@ -137,7 +137,7 @@ function CodesPage() {
 
               <a
                 href={c.link}
-                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-2.5 py-1.5 font-bold text-paper-foreground"
+                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-2 py-1 font-bold text-paper-foreground"
               >
                 <span className="truncate">{c.reward}</span>
                 <span className="shrink-0">CLAIM →</span>
