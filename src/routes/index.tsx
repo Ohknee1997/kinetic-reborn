@@ -22,11 +22,9 @@ export const Route = createFileRoute("/")({
   component: CodesPage,
 });
 
-const FILTERS = ["ALL", "SWEEPS", "DAILY BONUS", "FAST PAYOUT", "SPORTS", "NEW"];
-
 function CodesPage() {
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("ALL");
+  const [tagFilter, setTagFilter] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
 
   const list = useMemo(
@@ -35,10 +33,12 @@ function CodesPage() {
         const matchQ =
           !query.trim() ||
           (c.name + c.blurb + c.code).toLowerCase().includes(query.trim().toLowerCase());
-        const matchF = filter === "ALL" || c.tags.includes(filter);
-        return matchQ && matchF;
+        const matchT =
+          !tagFilter.trim() ||
+          c.tags.some((t) => t.toLowerCase().includes(tagFilter.trim().toLowerCase()));
+        return matchQ && matchT;
       }),
-    [query, filter],
+    [query, tagFilter],
   );
 
   const copy = (code: string) => {
@@ -49,104 +49,86 @@ function CodesPage() {
 
   return (
     <main className="min-h-screen bg-paper text-paper-foreground">
-      <section className="mx-auto max-w-[1800px] px-5 pt-12 pb-8 sm:px-8">
-        <p className="label-xs text-paper-foreground/50">CODES · SWEEPS · DAILY DRIPS</p>
-        <h1 className="mt-4 font-display text-[13vw] leading-[0.82] tracking-[-0.04em] sm:text-[9vw] lg:text-[7.5vw]">
-          CODES
-          <br />
-          WORTH
-          <br />
-          COPYING<span className="text-primary">.</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-sm leading-relaxed text-paper-foreground/70">
-          No mainstream sportsbooks. No $50 buy-in traps. Only free-to-play, daily-reward,
-          no-deposit sweeps sites — worked, with real top-code copy. Free money you don't deposit
-          to find.
-        </p>
-
-        <div className="mt-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap">
-          <label className="flex min-w-0 items-center gap-2 border-2 border-paper-foreground bg-paper px-3 py-2">
-            <Search className="size-4 shrink-0" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search a site or code"
-              className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40 sm:w-64"
-            />
-          </label>
-          <div className="col-span-2 flex flex-wrap gap-2">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`label-xs border-2 px-3 py-2 font-bold transition-colors ${
-                  filter === f
-                    ? "border-paper-foreground bg-paper-foreground text-paper"
-                    : "border-paper-border text-paper-foreground/70 hover:border-paper-foreground"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+      <section className="mx-auto max-w-[1800px] px-4 pt-3 pb-2 sm:px-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h1 className="font-display text-[8vw] leading-[0.85] tracking-[-0.04em] sm:text-[5vw] lg:text-[3.8vw]">
+            CODES WORTH COPYING<span className="text-primary">.</span>
+          </h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <label className="flex min-w-0 items-center gap-2 border-2 border-paper-foreground bg-paper px-2 py-1">
+              <Search className="size-3.5 shrink-0" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search a site or code"
+                className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40 sm:w-48"
+              />
+            </label>
+            <label className="flex min-w-0 items-center gap-2 border-2 border-paper-border bg-paper px-2 py-1">
+              <input
+                value={tagFilter}
+                onChange={(e) => setTagFilter(e.target.value)}
+                placeholder="Type a tag"
+                className="w-24 bg-transparent text-sm outline-none placeholder:text-paper-foreground/40"
+              />
+            </label>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1800px] px-5 pb-24 sm:px-8">
-        <div className="grid gap-5 lg:grid-cols-2">
+      <section className="mx-auto max-w-[1800px] px-4 pb-6 sm:px-6">
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
             <article
               key={c.id}
-              className="relative overflow-hidden border-2 border-paper-foreground bg-paper"
+              className="relative flex flex-col overflow-hidden border-2 border-paper-foreground bg-paper"
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-2 bottom-0 select-none font-display text-[5.5rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[7rem]"
+                className="pointer-events-none absolute -right-1 bottom-8 select-none font-display text-[2.6rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[3rem]"
               >
                 {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
-              <div className="relative flex min-w-0 items-start gap-3 p-4">
-                <div className="grid size-11 shrink-0 place-items-center bg-paper-foreground font-display text-base text-paper">
+              <div className="relative flex min-w-0 items-center gap-2 p-2">
+                <div className="grid size-6 shrink-0 place-items-center bg-paper-foreground font-display text-[9px] text-paper">
                   {c.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-display text-lg tracking-tight">{c.name}</h2>
-                  <div className="mt-1 flex flex-wrap gap-1.5">
-                    {c.tags.map((t) => (
+                  <h2 className="truncate font-display text-sm tracking-tight">{c.name}</h2>
+                  <div className="flex flex-wrap gap-1">
+                    {c.tags.slice(0, 2).map((t) => (
                       <span
                         key={t}
-                        className="label-xs border border-paper-foreground/30 px-1.5 py-0.5 font-bold text-paper-foreground/70"
+                        className="label-xs border border-paper-foreground/30 px-1 py-0 font-bold text-paper-foreground/70"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <p className="mt-2 text-sm text-paper-foreground/70">{c.blurb}</p>
                 </div>
                 <span className="label-xs shrink-0 font-bold text-primary">FREE</span>
               </div>
 
-              <div className="relative mx-4 mb-4 flex items-center justify-between gap-3 border-2 border-dashed border-primary/70 px-3 py-2">
+              <div className="relative mx-2 mb-1 flex items-center justify-between gap-2 border-2 border-dashed border-primary/70 px-2 py-1">
                 <div className="min-w-0">
-                  <p className="label-xs text-paper-foreground/50">BONUS CODE</p>
-                  <p className="truncate font-mono text-base font-bold">{c.code}</p>
+                  <p className="truncate font-mono text-xs font-bold">{c.code}</p>
                 </div>
                 <button
                   onClick={() => copy(c.code)}
-                  className="label-xs flex shrink-0 items-center gap-1.5 bg-paper-foreground px-3 py-2 font-bold text-paper"
+                  className="label-xs flex shrink-0 items-center gap-1 border-2 border-paper-foreground px-1.5 py-0.5 font-bold text-paper-foreground"
                 >
-                  {copied === c.code ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+                  {copied === c.code ? <Check className="size-3" /> : <Copy className="size-3" />}
                   {copied === c.code ? "COPIED" : "COPY"}
                 </button>
               </div>
 
               <a
                 href={c.link}
-                className="label-xs relative flex items-center justify-between bg-paper-foreground px-4 py-2.5 font-bold text-paper"
+                className="label-xs relative mt-auto flex items-center justify-between border-t-2 border-paper-foreground bg-paper px-2 py-1 font-bold text-paper-foreground"
               >
-                <span>{c.reward}</span>
-                <span>CLAIM →</span>
+                <span className="truncate">{c.reward}</span>
+                <span className="shrink-0">CLAIM →</span>
               </a>
             </article>
           ))}
