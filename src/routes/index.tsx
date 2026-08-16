@@ -103,7 +103,7 @@ function CodesPage() {
                 aria-hidden
                 className="pointer-events-none absolute -right-2 bottom-0 select-none font-display text-[5.5rem] leading-none tracking-[-0.05em] text-paper-foreground/[0.07] sm:text-[7rem]"
               >
-                {c.name.split(/[.\s]/)[0].toUpperCase()}
+                {c.name.split(/[.\s]/)[0]?.toUpperCase()}
               </span>
 
               <div className="relative flex min-w-0 items-start gap-3 p-4">
